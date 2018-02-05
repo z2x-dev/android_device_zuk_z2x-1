@@ -1,0 +1,29 @@
+diff --git a/gui/action.cpp b/gui/action.cpp
+index a395158..99ac3a0 100644
+--- a/gui/action.cpp
++++ b/gui/action.cpp
+@@ -1903,6 +1903,7 @@ int GUIAction::checkforapp(std::string arg __unused)
+ 			if (!TWFunc::Path_Exists(install_path))
+ 				install_path = base_path + "/app";
+ 			install_path += "/twrpapp";
++			DataManager::SetValue("tw_app_install_status", 2);
+ 			if (TWFunc::Path_Exists(install_path)) {
+ 				LOGINFO("App found at '%s'\n", install_path.c_str());
+ 				DataManager::SetValue("tw_app_install_status", 2); // 0 = no status, 1 = not installed, 2 = already installed or do not install
+@@ -1913,6 +1914,7 @@ int GUIAction::checkforapp(std::string arg __unused)
+ 			const char parent_path[] = "/data/app";
+ 			const char app_prefix[] = "me.twrp.twrpapp-";
+ 			DIR *d = opendir(parent_path);
++			DataManager::SetValue("tw_app_install_status", 2);
+ 			if (d) {
+ 				struct dirent *p;
+ 				while ((p = readdir(d))) {
+@@ -1932,7 +1934,7 @@ int GUIAction::checkforapp(std::string arg __unused)
+ 	} else
+ 		simulate_progress_bar();
+ 	LOGINFO("App not installed\n");
+-	DataManager::SetValue("tw_app_install_status", 1); // 0 = no status, 1 = not installed, 2 = already installed
++	DataManager::SetValue("tw_app_install_status", 2); // 0 = no status, 1 = not installed, 2 = already installed
+ exit:
+ 	operation_end(0);
+ 	return 0;
